@@ -173,17 +173,20 @@ function findNode(x,y){
 }
 
 canvas.addEventListener("pointerdown",(e)=>{
-    currentPath = [{
-    x: activeNode.x,
-    y: activeNode.y
-}];
 
-    const hit=findNode(getPos(e).x,getPos(e).y);
+    const p = getPos(e);
+
+    const hit = findNode(p.x,p.y);
 
     if(hit){
 
-        dragging=true;
-        activeNode=hit;
+        dragging = true;
+        activeNode = hit;
+
+        currentPath = [{
+            x: activeNode.x,
+            y: activeNode.y
+        }];
 
     }
 
