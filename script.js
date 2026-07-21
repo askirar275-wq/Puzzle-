@@ -1,4 +1,4 @@
-const canvas = document.getElementById("gameCanvas");
+
 // ===============================
 // BLOCK 1 : Canvas Setup
 // ===============================
