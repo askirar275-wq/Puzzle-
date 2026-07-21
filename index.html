@@ -2,39 +2,48 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Color Connect Puzzle</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Connect</title>
 
 <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
-<header>
+<!-- HOME -->
+<div id="home" class="screen">
 
-<div class="score">
-🪙 <span id="coins">0</span>
+<h1 class="title">COLOR CONNECT</h1>
+
+<button id="playBtn">▶ PLAY</button>
+
+<button id="shopBtn">🛒 SHOP</button>
+
+<button id="settingBtn">⚙ SETTINGS</button>
+
 </div>
 
-<div class="level">
-LEVEL <span id="level">1</span>
+<!-- GAME -->
+<div id="gameArea" class="screen" style="display:none;">
+
+<div id="topBar">
+
+<div>🪙 <span id="coins">0</span></div>
+
+<div>💎 <span id="gems">0</span></div>
+
+<div>⭐ <span id="score">0</span></div>
+
+<div>📍 <span id="level">1</span></div>
+
+<div>⏰ <span id="timer">60</span></div>
+
+<div>❤️ <span id="lives">3</span></div>
+
 </div>
-
-</header>
-
-<main>
-
-<div id="board">
 
 <canvas id="game"></canvas>
 
-</div>
-
-</main>
-
-<footer>
+<div id="controls">
 
 <button id="undo">Undo</button>
 
@@ -42,17 +51,37 @@ LEVEL <span id="level">1</span>
 
 <button id="hint">Hint</button>
 
-</footer>
+<button id="pause">Pause</button>
 
-<div id="complete">
+</div>
+
+</div>
+
+<!-- LEVEL COMPLETE -->
+
+<div id="complete" class="popup">
 
 <div class="box">
 
-<h2>Level Complete</h2>
+<h2>🎉 LEVEL COMPLETE</h2>
 
-<button id="next">
-Next Level
-</button>
+<p id="starText">⭐⭐⭐</p>
+
+<button id="nextLevel">NEXT LEVEL</button>
+
+</div>
+
+</div>
+
+<!-- GAME OVER -->
+
+<div id="gameOver" class="popup">
+
+<div class="box">
+
+<h2>💀 GAME OVER</h2>
+
+<button id="restartGame">Restart</button>
 
 </div>
 
@@ -61,4 +90,4 @@ Next Level
 <script src="script.js"></script>
 
 </body>
-</html>
+  </html>
