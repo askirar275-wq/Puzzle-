@@ -163,3 +163,52 @@ canvas.addEventListener("pointerup",e=>{
 });
 
 draw();
+// समान रंग वाले डॉट्स (Level 1)
+const pairs = [
+    { a: 0, b: 1 }, // लाल → लाल
+    { a: 2, b: 3 }  // नीला → नीला
+];
+
+let completed = [];
+
+function checkConnection(startDot, endDot) {
+
+    let s = dots.indexOf(startDot);
+    let e = dots.indexOf(endDot);
+
+    for (let pair of pairs) {
+
+        if (
+            (pair.a === s && pair.b === e) ||
+            (pair.a === e && pair.b === s)
+        ) {
+
+            completed.push(pair);
+
+            if (completed.length === pairs.length) {
+                levelComplete();
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function levelComplete() {
+
+    document
+        .getElementById("completeBox")
+        .classList
+        .remove("hide");
+
+}
+
+document
+.getElementById("nextBtn")
+.onclick=function(){
+
+    alert("Next Level Coming...");
+
+        }
