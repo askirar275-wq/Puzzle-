@@ -1,110 +1,64 @@
-const canvas = document.getElementById("game");
+const homeScreen = document.getElementById("homeScreen");
+const gameScreen = document.getElementById("gameScreen");
+const playBtn = document.getElementById("playBtn");
+
+const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 let currentLevel = 0;
-
-let dragging = false;
-let activeNode = null;
-let currentPath = [];
+let nodes = [];
 let lines = [];
 
-const NODE_RADIUS = 18;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 150;
+}
 
-const levels = [
+window.addEventListener("resize", resizeCanvas);
 
-{
-nodes:[
-{x:0.2,y:0.2,color:"#ff3b30"},
-{x:0.8,y:0.8,color:"#ff3b30"},
-{x:0.8,y:0.2,color:"#2196f3"},
-{x:0.2,y:0.8,color:"#2196f3"}
-]
-},
+function loadLevel(level) {
 
-{
-nodes:[
-{x:0.2,y:0.2,color:"#ff3b30"},
-{x:0.8,y:0.8,color:"#ff3b30"},
-{x:0.8,y:0.2,color:"#34c759"},
-{x:0.2,y:0.8,color:"#34c759"},
-{x:0.5,y:0.2,color:"#007aff"},
-{x:0.5,y:0.8,color:"#007aff"}
-]
+    nodes = LEVELS[level].nodes.map(n => ({
+        x: n.x * canvas.width,
+        y: n.y * canvas.height,
+        color: n.color
+    }));
+
+    lines = [];
+
+    draw();
 
 }
 
-];
+function draw() {
 
-function resizeCanvas(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-canvas.width=window.innerWidth;
+    nodes.forEach(node=>{
 
-canvas.height=window.innerHeight-120;
+        ctx.beginPath();
+        ctx.arc(node.x,node.y,18,0,Math.PI*2);
+        ctx.fillStyle=node.color;
+        ctx.fill();
 
-drawGame();
+        ctx.lineWidth=4;
+        ctx.strokeStyle="white";
+        ctx.stroke();
 
-}
-
-window.addEventListener("resize",resizeCanvas);
-
-function getNodes(){
-
-return levels[currentLevel].nodes.map(n=>({
-
-x:n.x*canvas.width,
-
-y:n.y*canvas.height,
-
-color:n.color,
-
-node:n
-
-}));
+    });
 
 }
 
-function drawGame(){
+playBtn.addEventListener("click",()=>{
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+    homeScreen.style.display="none";
 
-const nodes=getNodes();
+    gameScreen.style.display="flex";
 
-lines.forEach(line=>{
+    resizeCanvas();
 
-ctx.beginPath();
-
-ctx.lineWidth=12;
-
-ctx.lineCap="round";
-
-ctx.lineJoin="round";
-
-ctx.strokeStyle=line.color;
-
-ctx.moveTo(line.points[0].x,line.points[0].y);
-
-for(let i=1;i<line.points.length;i++){
-
-ctx.lineTo(line.points[i].x,line.points[i].y);
-
-}
-
-ctx.stroke();
+    loadLevel(currentLevel);
 
 });
-
-nodes.forEach(n=>{
-
-ctx.beginPath();
-
-ctx.fillStyle=n.color;
-
-ctx.arc(n.x,n.y,NODE_RADIUS,0,Math.PI*2);
-
-ctx.fill();
-
-});
-
-}
 
 resizeCanvas();
