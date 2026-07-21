@@ -1,250 +1,110 @@
-// ===============================
-// COLOR CONNECT ENGINE - PART 1
-// ===============================
-
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-let size;
+let currentLevel = 0;
 
-function resizeCanvas(){
-
-    size = Math.min(window.innerWidth*0.9,500);
-
-    canvas.width=size;
-    canvas.height=size;
-
-    drawGame();
-
-}
-
-window.addEventListener("resize",resizeCanvas);
-
-let currentLevel=0;
-
-let lines=[];
+let dragging = false;
+let activeNode = null;
 let currentPath = [];
+let lines = [];
 
-let dragging=false;
+const NODE_RADIUS = 18;
 
-let activeNode=null;
-
-const NODE_RADIUS=18;
-
-const levels=[
+const levels = [
 
 {
 nodes:[
+{x:0.2,y:0.2,color:"#ff3b30"},
+{x:0.8,y:0.8,color:"#ff3b30"},
+{x:0.8,y:0.2,color:"#2196f3"},
+{x:0.2,y:0.8,color:"#2196f3"}
+]
+},
 
-{x:.2,y:.5,color:"#ff3b30"},
-{x:.8,y:.5,color:"#ff3b30"},
-
-{x:.5,y:.2,color:"#2196f3"},
-{x:.5,y:.8,color:"#2196f3"}
-
+{
+nodes:[
+{x:0.2,y:0.2,color:"#ff3b30"},
+{x:0.8,y:0.8,color:"#ff3b30"},
+{x:0.8,y:0.2,color:"#34c759"},
+{x:0.2,y:0.8,color:"#34c759"},
+{x:0.5,y:0.2,color:"#007aff"},
+{x:0.5,y:0.8,color:"#007aff"}
 ]
 
 }
 
 ];
 
+function resizeCanvas(){
+
+canvas.width=window.innerWidth;
+
+canvas.height=window.innerHeight-120;
+
+drawGame();
+
+}
+
+window.addEventListener("resize",resizeCanvas);
+
+function getNodes(){
+
+return levels[currentLevel].nodes.map(n=>({
+
+x:n.x*canvas.width,
+
+y:n.y*canvas.height,
+
+color:n.color,
+
+node:n
+
+}));
+
+}
+
 function drawGame(){
 
-ctx.clearRect(0,0,size,size);
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
-ctx.beginPath();
-ctx.arc(size/2,size/2,size/2-8,0,Math.PI*2);
-ctx.fillStyle="#ffffff";
-ctx.fill();
-
-ctx.lineWidth=4;
-ctx.strokeStyle="#dddddd";
-ctx.stroke();
-
-ctx.lineWidth=10;
-ctx.lineCap="round";
+const nodes=getNodes();
 
 lines.forEach(line=>{
 
-    ctx.beginPath();
+ctx.beginPath();
 
-    ctx.lineWidth=10;
+ctx.lineWidth=12;
 
-    ctx.lineCap="round";
+ctx.lineCap="round";
 
-    ctx.lineJoin="round";
+ctx.lineJoin="round";
 
-    ctx.strokeStyle=line.color;
+ctx.strokeStyle=line.color;
 
-    ctx.moveTo(line.points[0].x,line.points[0].y);
+ctx.moveTo(line.points[0].x,line.points[0].y);
 
-    for(let i=1;i<line.points.length;i++){
+for(let i=1;i<line.points.length;i++){
 
-        ctx.lineTo(
-            line.points[i].x,
-            line.points[i].y
-        );
+ctx.lineTo(line.points[i].x,line.points[i].y);
 
-    }
+}
 
-    ctx.stroke();
+ctx.stroke();
 
 });
-levels[currentLevel].nodes.forEach(node=>{
 
-const x=node.x*size;
-
-const y=node.y*size;
+nodes.forEach(n=>{
 
 ctx.beginPath();
 
-ctx.arc(x,y,NODE_RADIUS,0,Math.PI*2);
+ctx.fillStyle=n.color;
 
-ctx.fillStyle=node.color;
+ctx.arc(n.x,n.y,NODE_RADIUS,0,Math.PI*2);
 
 ctx.fill();
-
-ctx.lineWidth=3;
-ctx.strokeStyle="#ffffff";
-ctx.stroke();
 
 });
 
 }
 
 resizeCanvas();
-
-// =======================
-// Play Button
-// =======================
-
-const playBtn = document.getElementById("playBtn");
-
-playBtn.addEventListener("click", () => {
-
-    document.getElementById("home").style.display = "none";
-
-    document.getElementById("gameArea").style.display = "block";
-
-    resizeCanvas();
-
-});
-// ===============================
-// PART 2 : Touch Controls
-// ===============================
-
-function getPos(e){
-
-    const rect=canvas.getBoundingClientRect();
-
-    return{
-        x:e.clientX-rect.left,
-        y:e.clientY-rect.top
-    };
-
-}
-
-function findNode(x,y){
-
-    const nodes=levels[currentLevel].nodes;
-
-    for(const node of nodes){
-
-        const nx=node.x*size;
-        const ny=node.y*size;
-
-        const dx=x-nx;
-        const dy=y-ny;
-
-        if(Math.sqrt(dx*dx+dy*dy)<=NODE_RADIUS+8){
-
-            return{
-                node,
-                x:nx,
-                y:ny
-            };
-
-        }
-
-    }
-
-    return null;
-
-}
-
-canvas.addEventListener("pointerdown",(e)=>{
-
-    const p = getPos(e);
-
-    const hit = findNode(p.x,p.y);
-
-    if(hit){
-
-        dragging = true;
-        activeNode = hit;
-
-        currentPath = [{
-            x: activeNode.x,
-            y: activeNode.y
-        }];
-
-    }
-
-});
-
-canvas.addEventListener("pointermove",(e)=>{
-
-    if(!dragging || !activeNode) return;
-
-    drawGame();
-
-const p=getPos(e);
-
-currentPath.push({
-    x:p.x,
-    y:p.y
-});
-
-ctx.beginPath();
-ctx.lineWidth=10;
-ctx.lineCap="round";
-ctx.lineJoin="round";
-ctx.strokeStyle=activeNode.node.color;
-
-ctx.moveTo(currentPath[0].x,currentPath[0].y);
-
-for(let i=1;i<currentPath.length;i++){
-
-    ctx.lineTo(currentPath[i].x,currentPath[i].y);
-
-}
-
-ctx.stroke();
-
-});
-
-canvas.addEventListener("pointerup",(e)=>{
-
-    if(dragging && activeNode){
-
-        lines.push({
-
-            points:[...currentPath],
-
-            color:activeNode.node.color
-
-        });
-
-    }
-
-    currentPath=[];
-
-    dragging=false;
-
-    activeNode=null;
-
-    drawGame();
-
-});
-
-    
