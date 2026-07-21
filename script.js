@@ -258,14 +258,3 @@ canvas.addEventListener("pointerup",(e)=>{
     drawGame();
 
 });
-    }
-
-    currentPath=[];
-
-    dragging=false;
-
-    activeNode=null;
-
-    drawGame();
-
-});
