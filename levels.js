@@ -1,64 +1,93 @@
-const homeScreen = document.getElementById("homeScreen");
-const gameScreen = document.getElementById("gameScreen");
-const playBtn = document.getElementById("playBtn");
+const LEVELS = [
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+{
+nodes:[
+{x:0.2,y:0.2,color:"#ff3b30"},
+{x:0.8,y:0.2,color:"#ff3b30"},
+{x:0.2,y:0.8,color:"#007aff"},
+{x:0.8,y:0.8,color:"#007aff"}
+]
+},
 
-let currentLevel = 0;
-let nodes = [];
-let lines = [];
+{
+nodes:[
+{x:0.2,y:0.2,color:"#ff3b30"},
+{x:0.8,y:0.8,color:"#ff3b30"},
+{x:0.8,y:0.2,color:"#34c759"},
+{x:0.2,y:0.8,color:"#34c759"}
+]
+},
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - 150;
+{
+nodes:[
+{x:0.2,y:0.5,color:"#ff3b30"},
+{x:0.8,y:0.5,color:"#ff3b30"},
+{x:0.5,y:0.2,color:"#007aff"},
+{x:0.5,y:0.8,color:"#007aff"}
+]
+},
+
+{
+nodes:[
+{x:0.15,y:0.15,color:"#ff3b30"},
+{x:0.85,y:0.15,color:"#ff3b30"},
+{x:0.15,y:0.85,color:"#34c759"},
+{x:0.85,y:0.85,color:"#34c759"}
+]
+},
+
+{
+nodes:[
+{x:0.3,y:0.2,color:"#ff3b30"},
+{x:0.7,y:0.8,color:"#ff3b30"},
+{x:0.7,y:0.2,color:"#007aff"},
+{x:0.3,y:0.8,color:"#007aff"}
+]
+},
+
+{
+nodes:[
+{x:0.2,y:0.3,color:"#ff9500"},
+{x:0.8,y:0.7,color:"#ff9500"},
+{x:0.8,y:0.3,color:"#af52de"},
+{x:0.2,y:0.7,color:"#af52de"}
+]
+},
+
+{
+nodes:[
+{x:0.25,y:0.25,color:"#ff3b30"},
+{x:0.75,y:0.75,color:"#ff3b30"},
+{x:0.75,y:0.25,color:"#34c759"},
+{x:0.25,y:0.75,color:"#34c759"}
+]
+},
+
+{
+nodes:[
+{x:0.5,y:0.15,color:"#007aff"},
+{x:0.5,y:0.85,color:"#007aff"},
+{x:0.2,y:0.5,color:"#ff3b30"},
+{x:0.8,y:0.5,color:"#ff3b30"}
+]
+},
+
+{
+nodes:[
+{x:0.2,y:0.2,color:"#ff2d55"},
+{x:0.8,y:0.8,color:"#ff2d55"},
+{x:0.8,y:0.2,color:"#32d74b"},
+{x:0.2,y:0.8,color:"#32d74b"}
+]
+},
+
+{
+nodes:[
+{x:0.2,y:0.2,color:"#007aff"},
+{x:0.8,y:0.2,color:"#007aff"},
+{x:0.2,y:0.8,color:"#ff9500"},
+{x:0.8,y:0.8,color:"#ff9500"}
+]
 }
 
-window.addEventListener("resize", resizeCanvas);
-
-function loadLevel(level) {
-
-    nodes = LEVELS[level].nodes.map(n => ({
-        x: n.x * canvas.width,
-        y: n.y * canvas.height,
-        color: n.color
-    }));
-
-    lines = [];
-
-    draw();
-
-}
-
-function draw() {
-
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    nodes.forEach(node=>{
-
-        ctx.beginPath();
-        ctx.arc(node.x,node.y,18,0,Math.PI*2);
-        ctx.fillStyle=node.color;
-        ctx.fill();
-
-        ctx.lineWidth=4;
-        ctx.strokeStyle="white";
-        ctx.stroke();
-
-    });
-
-}
-
-playBtn.addEventListener("click",()=>{
-
-    homeScreen.style.display="none";
-
-    gameScreen.style.display="flex";
-
-    resizeCanvas();
-
-    loadLevel(currentLevel);
-
-});
-
-resizeCanvas();
+];
