@@ -2,62 +2,59 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Color Connect Puzzle</title>
 
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<div class="topBar">
+<header>
 
-<div class="left">
-❤️ <span id="life">5</span>
+<div class="score">
+🪙 <span id="coins">0</span>
 </div>
 
-<div class="center">
+<div class="level">
 LEVEL <span id="level">1</span>
 </div>
 
-<div class="right">
-🪙 <span id="coin">0</span>
-</div>
+</header>
+
+<main>
+
+<div id="board">
+
+<canvas id="game"></canvas>
 
 </div>
 
-<div class="game">
+</main>
 
-<canvas id="gameCanvas"></canvas>
+<footer>
+
+<button id="undo">Undo</button>
+
+<button id="reset">Reset</button>
+
+<button id="hint">Hint</button>
+
+</footer>
+
+<div id="complete">
+
+<div class="box">
+
+<h2>Level Complete</h2>
+
+<button id="next">
+Next Level
+</button>
 
 </div>
-
-<div class="bottomBar">
-
-<button id="undoBtn">
-↩ Undo
-</button>
-
-<button id="resetBtn">
-🔄 Reset
-</button>
-
-<button id="hintBtn">
-💡 Hint
-</button>
-
-</div>
-
-<div id="completeBox" class="hide">
-
-<h1>LEVEL COMPLETE</h1>
-
-<p>⭐⭐⭐</p>
-
-<button id="nextBtn">
-Next Level →
-</button>
 
 </div>
 
