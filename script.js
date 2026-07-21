@@ -280,3 +280,17 @@ currentPath=[];
 draw();
 
 });
+function saveGame(){
+    localStorage.setItem("flowLevel", currentLevel);
+    localStorage.setItem("flowCoins", coins);
+    localStorage.setItem("flowHints", hints);
+}
+
+function loadGame(){
+    currentLevel = Number(localStorage.getItem("flowLevel")) || 0;
+    coins = Number(localStorage.getItem("flowCoins")) || 0;
+    hints = Number(localStorage.getItem("flowHints")) || 3;
+}
+
+loadGame();
+loadLevel(currentLevel);
