@@ -7,41 +7,48 @@
 
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- Home Screen -->
+<!-- HOME -->
 <div id="homeScreen">
 
-<h1>COLOR CONNECT</h1>
+    <h1>COLOR CONNECT</h1>
 
-<button id="playBtn">PLAY</button>
-
-</div>
-
-<!-- Game Screen -->
-<div id="gameScreen" style="display:none;">
-
-<div id="topBar">
-
-<div>❤️ <span id="lives">5</span></div>
-
-<div>💰 <span id="coins">0</span></div>
-
-<div>⭐ <span id="level">1</span></div>
+    <button id="playBtn">PLAY</button>
 
 </div>
 
-<canvas id="gameCanvas"></canvas>
+<!-- GAME -->
+<div id="gameScreen" class="hidden">
 
-<div id="bottomBar">
+    <div id="topBar">
 
-<button id="undoBtn">Undo</button>
+        <div class="box">
+            ❤️ <span id="lives">5</span>
+        </div>
 
-<button id="resetBtn">Reset</button>
+        <div class="box">
+            💰 <span id="coins">0</span>
+        </div>
 
-<button id="hintBtn">Hint</button>
+        <div class="box">
+            ⭐ <span id="level">1</span>
+        </div>
 
-</div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="bottomBar">
+
+        <button id="undoBtn">Undo</button>
+
+        <button id="resetBtn">Reset</button>
+
+        <button id="hintBtn">Hint</button>
+
+    </div>
 
 </div>
 
