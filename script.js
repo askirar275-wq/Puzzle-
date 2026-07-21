@@ -23,6 +23,7 @@ window.addEventListener("resize",resizeCanvas);
 let currentLevel=0;
 
 let lines=[];
+let currentPath = [];
 
 let dragging=false;
 
@@ -65,18 +66,30 @@ ctx.lineCap="round";
 
 lines.forEach(line=>{
 
-ctx.strokeStyle=line.color;
+    ctx.beginPath();
 
-ctx.beginPath();
+    ctx.lineWidth=10;
 
-ctx.moveTo(line.x1,line.y1);
+    ctx.lineCap="round";
 
-ctx.lineTo(line.x2,line.y2);
+    ctx.lineJoin="round";
 
-ctx.stroke();
+    ctx.strokeStyle=line.color;
+
+    ctx.moveTo(line.points[0].x,line.points[0].y);
+
+    for(let i=1;i<line.points.length;i++){
+
+        ctx.lineTo(
+            line.points[i].x,
+            line.points[i].y
+        );
+
+    }
+
+    ctx.stroke();
 
 });
-
 levels[currentLevel].nodes.forEach(node=>{
 
 const x=node.x*size;
@@ -160,6 +173,10 @@ function findNode(x,y){
 }
 
 canvas.addEventListener("pointerdown",(e)=>{
+    currentPath = [{
+    x: activeNode.x,
+    y: activeNode.y
+}];
 
     const hit=findNode(getPos(e).x,getPos(e).y);
 
@@ -178,43 +195,40 @@ canvas.addEventListener("pointermove",(e)=>{
 
     drawGame();
 
-    const p=getPos(e);
+const p=getPos(e);
 
-    ctx.beginPath();
+currentPath.push({
+    x:p.x,
+    y:p.y
+});
 
-    ctx.lineWidth=10;
-    ctx.lineCap="round";
-    ctx.strokeStyle=activeNode.node.color;
+ctx.beginPath();
+ctx.lineWidth=10;
+ctx.lineCap="round";
+ctx.lineJoin="round";
+ctx.strokeStyle=activeNode.node.color;
 
-    ctx.moveTo(activeNode.x,activeNode.y);
+ctx.moveTo(currentPath[0].x,currentPath[0].y);
 
-    ctx.lineTo(p.x,p.y);
+for(let i=1;i<currentPath.length;i++){
 
-    ctx.stroke();
+    ctx.lineTo(currentPath[i].x,currentPath[i].y);
+
+}
+
+ctx.stroke();
 
 });
 
 canvas.addEventListener("pointerup",(e)=>{
 
-    if(!dragging || !activeNode) return;
+    lines.push({
 
-    const hit=findNode(getPos(e).x,getPos(e).y);
+    points:[...currentPath],
 
-    if(hit && hit.node!==activeNode.node){
+    color:activeNode.node.color
 
-        if(hit.node.color===activeNode.node.color){
-
-            lines.push({
-
-                x1:activeNode.x,
-                y1:activeNode.y,
-
-                x2:hit.x,
-                y2:hit.y,
-
-                color:activeNode.node.color
-
-            });
+});
 
         }
 
