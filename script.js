@@ -116,3 +116,113 @@ playBtn.addEventListener("click", () => {
     resizeCanvas();
 
 });
+// ===============================
+// PART 2 : Touch Controls
+// ===============================
+
+function getPos(e){
+
+    const rect=canvas.getBoundingClientRect();
+
+    return{
+        x:e.clientX-rect.left,
+        y:e.clientY-rect.top
+    };
+
+}
+
+function findNode(x,y){
+
+    const nodes=levels[currentLevel].nodes;
+
+    for(const node of nodes){
+
+        const nx=node.x*size;
+        const ny=node.y*size;
+
+        const dx=x-nx;
+        const dy=y-ny;
+
+        if(Math.sqrt(dx*dx+dy*dy)<=NODE_RADIUS+8){
+
+            return{
+                node,
+                x:nx,
+                y:ny
+            };
+
+        }
+
+    }
+
+    return null;
+
+}
+
+canvas.addEventListener("pointerdown",(e)=>{
+
+    const hit=findNode(getPos(e).x,getPos(e).y);
+
+    if(hit){
+
+        dragging=true;
+        activeNode=hit;
+
+    }
+
+});
+
+canvas.addEventListener("pointermove",(e)=>{
+
+    if(!dragging || !activeNode) return;
+
+    drawGame();
+
+    const p=getPos(e);
+
+    ctx.beginPath();
+
+    ctx.lineWidth=10;
+    ctx.lineCap="round";
+    ctx.strokeStyle=activeNode.node.color;
+
+    ctx.moveTo(activeNode.x,activeNode.y);
+
+    ctx.lineTo(p.x,p.y);
+
+    ctx.stroke();
+
+});
+
+canvas.addEventListener("pointerup",(e)=>{
+
+    if(!dragging || !activeNode) return;
+
+    const hit=findNode(getPos(e).x,getPos(e).y);
+
+    if(hit && hit.node!==activeNode.node){
+
+        if(hit.node.color===activeNode.node.color){
+
+            lines.push({
+
+                x1:activeNode.x,
+                y1:activeNode.y,
+
+                x2:hit.x,
+                y2:hit.y,
+
+                color:activeNode.node.color
+
+            });
+
+        }
+
+    }
+
+    dragging=false;
+    activeNode=null;
+
+    drawGame();
+
+});
