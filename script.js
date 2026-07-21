@@ -225,16 +225,45 @@ ctx.stroke();
 
 canvas.addEventListener("pointerup",(e)=>{
 
-    if(dragging && activeNode){
+    if(!dragging || !activeNode){
+        return;
+    }
 
-        lines.push({
+    const p=getPos(e);
 
-            points:[...currentPath],
+    const end=findNode(p.x,p.y);
 
-            color:activeNode.node.color
+    if(
+        end &&
+        end.node.color===activeNode.node.color &&
+        end.node!==activeNode.node
+    ){
 
+        currentPath.push({
+            x:end.x,
+            y:end.y
         });
 
+        lines=lines.filter(
+            l=>l.color!==activeNode.node.color
+        );
+
+        lines.push({
+            points:[...currentPath],
+            color:activeNode.node.color
+        });
+
+    }
+
+    currentPath=[];
+
+    dragging=false;
+
+    activeNode=null;
+
+    drawGame();
+
+});
     }
 
     currentPath=[];
