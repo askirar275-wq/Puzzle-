@@ -9,84 +9,43 @@
 </head>
 <body>
 
-<!-- HOME -->
-<div id="home" class="screen">
+<!-- Home Screen -->
+<div id="homeScreen">
 
-<h1 class="title">COLOR CONNECT</h1>
+<h1>COLOR CONNECT</h1>
 
-<button id="playBtn">▶ PLAY</button>
-
-<button id="shopBtn">🛒 SHOP</button>
-
-<button id="settingBtn">⚙ SETTINGS</button>
+<button id="playBtn">PLAY</button>
 
 </div>
 
-<!-- GAME -->
-<div id="gameArea" class="screen" style="display:none;">
+<!-- Game Screen -->
+<div id="gameScreen" style="display:none;">
 
 <div id="topBar">
 
-<div>🪙 <span id="coins">0</span></div>
+<div>❤️ <span id="lives">5</span></div>
 
-<div>💎 <span id="gems">0</span></div>
+<div>💰 <span id="coins">0</span></div>
 
-<div>⭐ <span id="score">0</span></div>
-
-<div>📍 <span id="level">1</span></div>
-
-<div>⏰ <span id="timer">60</span></div>
-
-<div>❤️ <span id="lives">3</span></div>
+<div>⭐ <span id="level">1</span></div>
 
 </div>
 
-<canvas id="game"></canvas>
+<canvas id="gameCanvas"></canvas>
 
-<div id="controls">
+<div id="bottomBar">
 
-<button id="undo">Undo</button>
+<button id="undoBtn">Undo</button>
 
-<button id="reset">Reset</button>
+<button id="resetBtn">Reset</button>
 
-<button id="hint">Hint</button>
-
-<button id="pause">Pause</button>
+<button id="hintBtn">Hint</button>
 
 </div>
 
 </div>
 
-<!-- LEVEL COMPLETE -->
-
-<div id="complete" class="popup">
-
-<div class="box">
-
-<h2>🎉 LEVEL COMPLETE</h2>
-
-<p id="starText">⭐⭐⭐</p>
-
-<button id="nextLevel">NEXT LEVEL</button>
-
-</div>
-
-</div>
-
-<!-- GAME OVER -->
-
-<div id="gameOver" class="popup">
-
-<div class="box">
-
-<h2>💀 GAME OVER</h2>
-
-<button id="restartGame">Restart</button>
-
-</div>
-
-</div>
-
+<script src="levels.js"></script>
 <script src="script.js"></script>
 
 </body>
