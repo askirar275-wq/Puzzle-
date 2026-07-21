@@ -225,19 +225,22 @@ ctx.stroke();
 
 canvas.addEventListener("pointerup",(e)=>{
 
-    lines.push({
+    if(dragging && activeNode){
 
-    points:[...currentPath],
+        lines.push({
 
-    color:activeNode.node.color
+            points:[...currentPath],
 
-});
+            color:activeNode.node.color
 
-        }
+        });
 
     }
 
+    currentPath=[];
+
     dragging=false;
+
     activeNode=null;
 
     drawGame();
