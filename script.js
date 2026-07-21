@@ -1,4 +1,28 @@
 const canvas = document.getElementById("gameCanvas");
+// ===============================
+// BLOCK 1 : Canvas Setup
+// ===============================
+
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let size = 0;
+
+function resizeCanvas() {
+
+    size = Math.min(window.innerWidth * 0.92, window.innerHeight * 0.72);
+
+    canvas.width = size;
+    canvas.height = size;
+
+    if (typeof drawGame === "function") {
+        drawGame();
+    }
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
 const ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
