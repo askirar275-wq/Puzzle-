@@ -100,3 +100,19 @@ ctx.stroke();
 }
 
 resizeCanvas();
+
+// =======================
+// Play Button
+// =======================
+
+const playBtn = document.getElementById("playBtn");
+
+playBtn.addEventListener("click", () => {
+
+    document.getElementById("home").style.display = "none";
+
+    document.getElementById("gameArea").style.display = "block";
+
+    resizeCanvas();
+
+});
